@@ -23,6 +23,90 @@
       overflow-x: hidden;
     }
 
+    .cart-dropdown {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px; /* Set max height for scrollable area */
+      overflow-y: auto; /* Enable vertical scrolling */
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      padding: 20px;
+      z-index: 100;
+    }
+    .cart-dropdown h3, .product h3 {
+      margin: 10px 0;
+    }
+    .cart-dropdown p, .product p {
+      margin: 5px 0;
+    }
+    .product-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      width: 200px;
+    }
+    .btn {
+      background-color: #ff5a5f;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .cart-icon {
+      cursor: pointer;
+      position: relative;
+    }
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: #ff5a5f;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+    .total-price {
+      font-weight: bold;
+      text-align: right;
+    }
+    /* Checkout Form */
+    .checkout-form {
+      margin-top: 20px;
+      display: none;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+    .checkout-form label {
+      display: block;
+      margin: 5px 0;
+    }
+    .checkout-form input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    /* Payment Section */
+    .payment-section {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .payment-section img {
+      width: 200px; /* Adjust this based on your QR code size */
+    }
+    
     /* Header Styles */
     header {
       background-color: #ffffff;
@@ -263,11 +347,38 @@
         <li><a href="https://instagram.com/kawaiietpetite">Contact</a></li>
       </ul>
     </nav>
-    <div class="cart">
-      <a href="https://kawaiietpetite.github.io/checkout" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+    <div class="cart-icon" onclick="toggleCart()">
+    🛒 Cart <span class="cart-count" id="cart-count">0</span>
     </div>
   </header>
 
+  <div class="cart-dropdown" id="cart-dropdown">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <p class="total-price">Total: $<span id="total-price">0</span></p>
+    <button class="btn" onclick="toggleCheckout()">Checkout</button>
+
+    <!-- Checkout Form -->
+  <div class="checkout-form" id="checkout-form">
+    <h3>Checkout</h3>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <label for="address">Shipping Address:</label>
+    <input type="text" id="address" required>
+    <button class="btn" onclick="completeOrder()">Complete Order</button>
+  </div>
+</div>
+  
+<!-- Payment Section -->
+<div class="payment-section" id="payment-section">
+  <h3>Payment</h3>
+  <p>Scan the QR code below to complete the payment via Google Pay:</p>
+  <img src="gpay.jpg" alt="GPay QR Code">
+  <p>Once the payment is complete, please click the button below.</p>
+  <button class="btn" onclick="paymentConfirmed()">Payment Confirmed</button>
+</div>  
   <!-- Product Showcase -->
   <section class="products">
     <h2>Thin Chain Bracelets</h2>
@@ -355,21 +466,33 @@
   </footer>
 
   <script>
-    function toggleMenu() {
-      const nav = document.querySelector("nav ul");
-      nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+    function toggleCart() {
+      const cartDropdown = document.getElementById('cart-dropdown');
+      cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+      displayCartItems();
     }
 
-    // Function to get cart items from local storage or initialize an empty cart
+    function toggleCheckout() {
+      const checkoutForm = document.getElementById('checkout-form');
+      checkoutForm.style.display = checkoutForm.style.display === 'block' ? 'none' : 'block';
+    }
+    
+    
     function getCart() {
-      return JSON.parse(localStorage.getItem('cart')) || [];
+      return JSON.parse(localStorage.getItem('cart') || '[]');
     }
   
     // Function to save cart items to local storage
     function saveCart(cart) {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-  
+    
+    function updateCartCount() {
+      const cart = getCart();
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+    
     // Function to add an item to the cart
     function addToCart(product) {
       const cart = getCart();
@@ -384,14 +507,97 @@
       saveCart(cart);
       updateCartCount();
     }
+
+    function displayCartItems() {
+      const cart = getCart();
+      const cartItemsContainer = document.getElementById('cart-items');
+      let totalPrice = 0;
+
+      cartItemsContainer.innerHTML = '';
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+        cartItemsContainer.innerHTML += `
+          <div class="cart-item" data-id="${item.id}">
+            <h3>${item.name}</h3>
+            <p>Price: $${item.price}</p>
+            <p>Quantity: 
+              <button onclick="changeQuantity('${item.id}', -1)">-</button> 
+              ${item.quantity} 
+              <button onclick="changeQuantity('${item.id}', 1)">+</button>
+            </p>
+            <p>Total: $${itemTotal.toFixed(2)}</p>
+            <button onclick="removeFromCart('${item.id}')">Remove</button>
+            <hr>
+          </div>
+        `;
+      });
   
+      document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+    }
     // Function to update the cart item count in the header
     function updateCartCount() {
       const cart = getCart();
       const count = cart.reduce((total, item) => total + item.quantity, 0);
       document.getElementById('cart-count').textContent = count;
     }
+
+    function changeQuantity(id, change) {
+      const cart = getCart();
+      const item = cart.find(item => item.id === id);
   
+      if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          removeFromCart(id);
+          return;
+        }
+        saveCart(cart);
+        displayCartItems();
+        updateCartCount();
+      }
+    }
+  
+    function removeFromCart(id) {
+      const cart = getCart().filter(item => item.id !== id);
+      saveCart(cart);
+      displayCartItems();
+      updateCartCount();
+    }
+
+    function completeOrder() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const address = document.getElementById('address').value;
+  
+      if (name && email && address) {
+        document.getElementById('payment-section').style.display = 'block';
+        document.getElementById('checkout-form').style.display = 'none';
+        saveCart([]);
+        updateCartCount();
+      } else {
+        alert('Please fill out all fields before completing your order.');
+      }
+    }
+  
+    function paymentConfirmed() {
+      alert('Thank you for your payment! Your order is being processed.');
+      // You can also trigger an email confirmation here using EmailJS if needed.
+    }
+
+    // Add event listeners to "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const productElement = button.closest('.product');
+        const product = {
+          id: productElement.getAttribute('data-id'),
+          name: productElement.getAttribute('data-name'),
+          price: parseFloat(productElement.getAttribute('data-price'))
+        };
+        addToCart(product);
+      });
+    });
+    
     // Event listener for "Add to Cart" buttons
     document.querySelectorAll('.add-to-cart').forEach(button => {
       button.addEventListener('click', () => {

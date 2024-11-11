@@ -586,7 +586,7 @@
         totalPrice += itemTotal;
         cartItemsContainer.innerHTML += `
           <div class="cart-item" data-id="${item.id}">
-            <h3>₹${item.name}</h3>
+            <h3>${item.name}</h3>
             <p>Price: ₹${item.price}</p>
             <p>Quantity: 
               <button onclick="changeQuantity('${item.id}', -1)">-</button> 

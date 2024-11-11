@@ -492,7 +492,7 @@
       document.getElementById('cart-count').textContent = count;
     }
     
-    // Clear the cart on page load (when the page is refreshed)
+        // Clear the cart on page load (when the page is refreshed)
     window.onload = function() {
       localStorage.removeItem('cart');  // This will clear the cart from localStorage
       updateCartCount();  // Update the cart count after clearing
@@ -514,63 +514,7 @@
     function saveCart(cart) {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-
-    // Function to display cart items
-function displayCartItems() {
-  const cart = getCart();
-  const cartItemsContainer = document.getElementById('cart-items');
-  let totalPrice = 0;
-
-  cartItemsContainer.innerHTML = '';
-  cart.forEach(item => {
-    const itemTotal = item.price * item.quantity;
-    totalPrice += itemTotal;
-    cartItemsContainer.innerHTML += `
-      <div class="cart-item" data-id="${item.id}">
-        <h3>${item.name}</h3>
-        <p>Price: ₹${item.price}</p>
-        <p>Quantity: 
-          <button onclick="changeQuantity('${item.id}', -1)">-</button> 
-          ${item.quantity} 
-          <button onclick="changeQuantity('${item.id}', 1)">+</button>
-        </p>
-        <p>Total: ₹${itemTotal.toFixed(2)}</p>
-        <button onclick="removeFromCart('${item.id}')">Remove</button>
-        <hr>
-      </div>
-    `;
-  });
-
-  // Update the total price display
-  document.getElementById('total-price').textContent = `₹${totalPrice.toFixed(2)}`;
-}
-
-// Function to change quantity (increase/decrease)
-function changeQuantity(itemId, change) {
-  const cart = getCart();
-  const item = cart.find(item => item.id === itemId);
   
-  if (item) {
-    item.quantity += change;
-    if (item.quantity <= 0) {
-      removeFromCart(itemId);
-    } else {
-      saveCart(cart);
-      displayCartItems(); // Refresh cart
-    }
-  }
-}
-
-// Function to remove item from cart
-function removeFromCart(itemId) {
-  let cart = getCart();
-  cart = cart.filter(item => item.id !== itemId);
-  saveCart(cart);
-  updateCartCount(); // Refresh cart count
-  displayCartItems(); // Refresh cart items display
-}
-
-    
     // Function to display cart items
     function displayCartItems() {
       const cart = getCart();
@@ -583,15 +527,15 @@ function removeFromCart(itemId) {
         totalPrice += itemTotal;
         cartItemsContainer.innerHTML += `
           <div class="cart-item" data-id="${item.id}">
-            <h3>₹{item.name}</h3>
-            <p>Price: ₹{item.price}</p>
+            <h3>${item.name}</h3>
+            <p>Price: ₹${item.price}</p>
             <p>Quantity: 
-              <button onclick="changeQuantity('₹{item.id}', -1)">-</button> 
-              ₹{item.quantity} 
-              <button onclick="changeQuantity('₹{item.id}', 1)">+</button>
+              <button onclick="changeQuantity('${item.id}', -1)">-</button> 
+              ${item.quantity} 
+              <button onclick="changeQuantity('${item.id}', 1)">+</button>
             </p>
-            <p>Total: ₹{itemTotal.toFixed(2)}</p>
-            <button onclick="removeFromCart('₹{item.id}')">Remove</button>
+            <p>Total: ₹${itemTotal.toFixed(2)}</p>
+            <button onclick="removeFromCart('${item.id}')">Remove</button>
             <hr>
           </div>
         `;
@@ -643,15 +587,15 @@ function removeFromCart(itemId) {
         totalPrice += itemTotal;
         cartItemsContainer.innerHTML += `
           <div class="cart-item" data-id="${item.id}">
-            <h3>₹{item.name}</h3>
-            <p>Price: ₹{item.price}</p>
+            <h3>${item.name}</h3>
+            <p>Price: $${item.price}</p>
             <p>Quantity: 
-              <button onclick="changeQuantity('₹{item.id}', -1)">-</button> 
-              ₹{item.quantity} 
-              <button onclick="changeQuantity('₹{item.id}', 1)">+</button>
+              <button onclick="changeQuantity('${item.id}', -1)">-</button> 
+              ${item.quantity} 
+              <button onclick="changeQuantity('${item.id}', 1)">+</button>
             </p>
-            <p>Total: ₹{itemTotal.toFixed(2)}</p>
-            <button onclick="removeFromCart('₹{item.id}')">Remove</button>
+            <p>Total: $${itemTotal.toFixed(2)}</p>
+            <button onclick="removeFromCart('${item.id}')">Remove</button>
             <hr>
           </div>
         `;
@@ -733,7 +677,7 @@ function removeFromCart(itemId) {
         };
   
         addToCart(product);
-        alert(`₹{product.name} has been added to your cart!`);
+        alert(`${product.name} has been added to your cart!`);
       });
     });
   
@@ -742,5 +686,4 @@ function removeFromCart(itemId) {
   </script>
 
 </body>
-</html>
-  
+</html>  

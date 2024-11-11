@@ -241,6 +241,61 @@
       }
     }
   </style>
+  
+  <script>
+  // Function to get cart items from local storage or initialize an empty cart
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  // Function to save cart items to local storage
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // Function to add an item to the cart
+  function addToCart(product) {
+    const cart = getCart();
+    const existingProduct = cart.find(item => item.id === product.id);
+
+    if (existingProduct) {
+      existingProduct.quantity += 1; // Increment quantity if the product already exists
+    } else {
+      cart.push({...product, quantity: 1}); // Add new product with quantity 1
+    }
+
+    saveCart(cart);
+    updateCartCount();
+  }
+
+  // Function to update the cart item count in the header
+  function updateCartCount() {
+    const cart = getCart();
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cart-count').textContent = count;
+  }
+
+  // Event listener for "Add to Cart" buttons
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+      const productElement = button.parentElement;
+      const product = {
+        id: productElement.getAttribute('data-id'),
+        name: productElement.getAttribute('data-name'),
+        price: parseFloat(productElement.getAttribute('data-price'))
+      };
+
+      addToCart(product);
+      alert(`${product.name} has been added to your cart!`);
+    });
+  });
+
+  // Initialize cart count on page load
+  updateCartCount();
+</script>
+
+</body>
+</html>
 </head>
 
 <body>

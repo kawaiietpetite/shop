@@ -594,14 +594,14 @@
               ${item.quantity} 
               <button onclick="changeQuantity('${item.id}', 1)">+</button>
             </p>
-            <p>Total: ₹{itemTotal.toFixed(2)}</p>
+            <p>Total: ${itemTotal.toFixed(2)}</p>
             <button onclick="removeFromCart('${item.id}')">Remove</button>
             <hr>
           </div>
         `;
       });
   
-      document.getElementById('total-price').textContent = `₹{totalPrice.toFixed(2)}`;
+      document.getElementById('total-price').textContent = `${totalPrice.toFixed(2)}`;
     }
     // Function to update the cart item count in the header
     function updateCartCount() {

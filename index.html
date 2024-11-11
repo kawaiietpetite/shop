@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Kawaii et Petite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Basic CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      color: #333;
+      background-color: #fafafa;
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #ffffff;
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .logo h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8em;
+      color: #333;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5em;
+      list-style: none;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .cart {
+      background: #ff7f7f;
+      padding: 8px 12px;
+      border-radius: 20px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* Banner Section */
+    .main-banner {
+      background: url('path_to_banner_image.jpg') center/cover no-repeat;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .main-banner h2 {
+      font-size: 3em;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .main-banner p {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+
+    .btn {
+      background: #ff7f7f;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    /* Products Section */
+    .products {
+      padding: 50px 5%;
+      background-color: #fefefe;
+    }
+
+    .products h2 {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2em;
+      color: #333;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-card h3 {
+      margin-top: 15px;
+      font-size: 1.2em;
+    }
+
+    .product-card .price {
+      color: #ff7f7f;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    /* Footer Section */
+    footer {
+      background: #333;
+      color: #fff;
+      padding: 30px 5%;
+      text-align: center;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    footer ul li a {
+      text-decoration: none;
+      color: #ccc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: #fff;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        padding: 20px;
+        border-top: 1px solid #ddd;
+      }
+
+      nav ul li {
+        margin-bottom: 15px;
+      }
+
+      .cart {
+        font-size: 0.9em;
+        padding: 6px 10px;
+      }
+
+      .product-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      <a href="https://kawaiietpetite.github.io/kawaiietpetite">
+        <img src="logo.png" alt="Kawaii et Petite Logo">
+        <h1>Kawaii et Petite</h1>
+      </a>
+    </div>
+    <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+    <nav>
+      <ul>
+        <li><a href="https://kawaiietpetite.github.io/kawaiietpetite">Home</a></li>
+        <li><a href="https://kawaiietpetite.github.io/shop">Shop</a></li>
+        <li><a href="https://kawaiietpetite.github.io/swaroopa">About</a></li>
+        <li><a href="https://instagram.com/kawaiietpetite">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="cart">
+      <a href="/cart">Cart (0)</a>
+    </div>
+  </header>
+
+  <!-- Product Showcase -->
+  <section class="products">
+    <h2>Our Collections</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="path_to_image1.jpg" alt="Thin Chain Bracelets">
+        <h3>Thin Chain Bracelets</h3>
+        <p class="price">₹100</p>
+        <a href="https://kawaiietpetite.github.io/shop" class="btn">View More</a>
+      </div>
+      <div class="product-card">
+        <img src="path_to_image2.jpg" alt="Glass Bead Bracelets">
+        <h3>Glass Bead Bracelets</h3>
+        <p class="price">₹50</p>
+        <a href="https://kawaiietpetite.github.io/shop" class="btn">View More</a>
+      </div>
+      <div class="product-card">
+        <img src="path_to_image3.jpg" alt="Thin Chain Necklaces">
+        <h3>Thin Chain Necklaces</h3>
+        <p class="price">₹125</p>
+        <a href="https://kawaiietpetite.github.io/shop" class="btn">View More</a>
+      </div>
+      <div class="product-card">
+        <img src="path_to_image4.jpg" alt="Pair Series">
+        <h3>Pair Series</h3>
+        <p class="price">₹100</p>
+        <a href="https://kawaiietpetite.github.io/shop" class="btn">View More</a>
+      </div>
+      <div class="product-card">
+        <img src="path_to_image5.jpg" alt="Custom Digital Art">
+        <h3>Customised Digital Art</h3>
+        <p class="price">₹500</p>
+        <a href="https://kawaiietpetite.github.io/shop" class="btn">View More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Kawaii et Petite. All rights reserved.</p>
+    <ul>
+      <li><a href="https://kawaiietpetite.github.io/policy">Shop Policy</a></li>
+      <li><a href="/terms">Terms & Conditions</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector("nav ul");
+      nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
+</body>
+
+</html>

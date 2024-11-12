@@ -308,6 +308,38 @@
       border: none;
       cursor: pointer;
     }
+    
+    /* Container to center products */
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;         /* Allow items to wrap to the next line */
+      justify-content: center;  /* Center align products */
+      gap: 16px;                /* Spacing between products */
+      padding: 16px;            /* Add padding around the container */
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* Individual product styling */
+    .product {
+      width: 100%;              /* Full width on smaller screens */
+      max-width: 200px;         /* Set max width to limit product size */
+      box-sizing: border-box;
+    }
+    
+    /* Media query for larger screens */
+    @media (min-width: 600px) {
+      .product {
+        width: calc(50% - 16px); /* Two products per row */
+      }
+    }
+    
+    @media (min-width: 900px) {
+      .product {
+        width: calc(33.33% - 16px); /* Three products per row */
+      }
+    }
+        
     /* Footer Section */
     footer {
       background: #333;

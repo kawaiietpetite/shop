@@ -54,6 +54,115 @@
       font-family: 'Roboto', sans-serif;
     }
 
+    header {
+            background-color: #ffcccb;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+
+        header img {
+            height: 40px;
+            max-width: 100%;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap; /* Wrap nav items for smaller screens */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        /* Container */
+        .container {
+            padding: 20px;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-item:hover {
+            transform: scale(1.05);
+        }
+
+        .product-item img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Responsive Layout Adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px;
+                text-align: center;
+            }
+
+            nav {
+                flex-direction: column; /* Stack nav items vertically */
+                align-items: center;
+            }
+
+            nav a {
+                margin: 5px 0;
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .product-item img {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 14px;
+                margin: 5px;
+            }
+
+            .container {
+                padding: 5px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr; /* Single column for small screens */
+                gap: 10px;
+            }
+
+            .product-item {
+                padding: 8px;
+            }
+
+            .product-item img {
+                height: 120px;
+            }
+        }
+    
     body {
       color: #333;
       background-color: #fafafa;

@@ -8,42 +8,6 @@
   <title>Shop | Kawaii et Petite</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-    <!-- Add this inside the <head> or just before the closing </body> tag -->
-  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
-  <script type="text/javascript">
-    (function() {
-      emailjs.init("7MMNF_1ZrjRUGIbdA"); // Replace with your EmailJS public key
-    })();
-  </script>
-  
-  <script>
-    document.getElementById("orderForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent the form from submitting normally
-      
-      const customerName = document.getElementById("customerName").value;
-      const customerEmail = document.getElementById("customerEmail").value;
-      const customerAddress = document.getElementById("customerAddress").value;
-      const customerOrder = document.getElementById("customerOrder").value;
-  
-      // Prepare email params
-      const templateParams = {
-        name: customerName,
-        email: customerEmail,
-        address: customerAddress,
-        order: customerOrder
-      };
-  
-      emailjs.send("service_aidedst", "template_eaozk5l", templateParams)
-        .then(function(response) {
-          alert("Order submitted successfully!");
-          // Optionally, reset the form after successful submission
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("Failed to send order. Please try again.");
-          console.error("EmailJS error:", error);
-        });
-    });
-  </script>
 
   <style>
     /* Basic CSS Reset */
@@ -857,6 +821,43 @@
         alert(`${product.name} has been added to your cart!`);
       });
     });
+
+       <!-- Add this inside the <head> or just before the closing </body> tag -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      emailjs.init("7MMNF_1ZrjRUGIbdA"); // Replace with your EmailJS public key
+    })();
+  </script>
+  
+    <script>
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+      
+      const customerName = document.getElementById("customerName").value;
+      const customerEmail = document.getElementById("customerEmail").value;
+      const customerAddress = document.getElementById("customerAddress").value;
+      const customerOrder = document.getElementById("customerOrder").value;
+  
+      // Prepare email params
+      const templateParams = {
+        name: customerName,
+        email: customerEmail,
+        address: customerAddress,
+        order: customerOrder
+      };
+  
+      emailjs.send("service_aidedst", "template_eaozk5l", templateParams)
+        .then(function(response) {
+          alert("Order submitted successfully!");
+          // Optionally, reset the form after successful submission
+          document.getElementById("orderForm").reset();
+        }, function(error) {
+          alert("Failed to send order. Please try again.");
+          console.error("EmailJS error:", error);
+        });
+    });
+  </script>
   
     // Initialize cart count on page load
     updateCartCount();
